@@ -25,10 +25,45 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n) - First runs through length of list, then all elements in list via list param, 
+# then all hash objects in hash, then another array with size of list sequentially,
+# which adds up to O(3n) or just O(n)
+
+# Space Complexity: O(n) - Two arrays and one hash is created whose size 
+# depend on the number of elements in the list. No nesting, stays O(n)
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  return [] if list.empty? 
+  # list tracking quantities
+  total_ele = list.length # O(n) operation
+  return list if total_ele == 1
+  top_k = Array.new(total_ele + 1){[]} # plus one for better tracking
+  count_hash = {}
+
+  # get frequencies of each element, O(n)
+  list.each do |e|
+    count_hash[e] ||= 1
+    count_hash[e] += 1
+  end
+
+  # use a non-nested O(n) operation to sort
+  # frequencies in top_k
+  count_hash.each do |k,v|
+    top_k[v] << k
+  end
+
+  return_arr = []
+  i = 0 # to avoid another O(n) operation in loop
+  
+  # sort array in order now
+  until total_ele == 0
+    if(!top_k[total_ele].empty?)
+      return_arr += top_k[total_ele]
+    end
+
+    total_ele -= 1
+  end
+
+  return return_arr[0...k]
 end
 
 
