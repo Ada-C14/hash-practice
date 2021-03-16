@@ -75,5 +75,40 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def valid_sudoku(table)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  sudoku_box_hash = { [0, 0] => Set[], [0, 1] => Set[], [0, 2] => Set[],
+                      [1, 0] => Set[], [1, 1] => Set[], [1, 2] => Set[],
+                      [2, 0] => Set[], [2, 1] => Set[], [2, 2] => Set[]}
+
+  sudoku_row_hash = { 1 => Set[], 2 => Set[], 3 => Set[],
+                      4 => Set[], 5 => Set[], 6 => Set[],
+                      7 => Set[], 8 => Set[], 9 => Set[]}
+  
+  sudoku_col_hash = { 1 => Set[], 2 => Set[], 3 => Set[],
+                      4 => Set[], 5 => Set[], 6 => Set[],
+                      7 => Set[], 8 => Set[], 9 => Set[]}
+
+  sudoku_diagonal_hash = {1 => Set[], 9 => Set[]}
+
+  table.each_with_index do |arr, i|
+    arr.each_with_index do |ele, j|
+      next if ele == "."
+      # check and add diagonals
+      if i == j 
+        return false if sudoku_diagonal_hash[1].include?(ele)
+        sudoku_diagonal_hash[1].add(ele)
+      elsif i + j + 1 == 9 || i == 4 && j == 4
+        return false if sudoku_diagonal_hash[9].include?(ele)
+        sudoku_diagonal_hash[9].add(ele)
+      end
+
+      return false if sudoku_row_hash[i + 1].include?(ele)
+      return false if sudoku_col_hash[j + 1].include?(ele)
+      return false if sudoku_box_hash[[i / 3, j / 3]].include?(ele)
+      sudoku_row_hash[i + 1].add(ele)
+      sudoku_col_hash[j + 1].add(ele)
+      sudoku_box_hash[[i / 3, j / 3]].add(ele)
+    end
+  end
+
+  return true
 end
