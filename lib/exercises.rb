@@ -52,7 +52,6 @@ def top_k_frequent_elements(list, k)
   end
 
   return_arr = []
-  i = 0 # to avoid another O(n) operation in loop
   
   # sort array in order now
   until total_ele == 0
