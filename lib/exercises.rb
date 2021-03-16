@@ -72,22 +72,27 @@ end
 #   Each element can either be a ".", or a digit 1-9
 #   The same digit cannot appear twice or more in the same 
 #   row, column or 3x3 subgrid
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: I want to say this is O(1) since the number of elements in a 3x3 grid
+# you have to check is always the same, and any lookups and inserts are O(1) since I'm not 
+# only storing everything in a hash, but I'm mapping the keys to another hash. 
+
+# Space Complexity: I also think if we are always using a 3x3 grid and inserting into a hash, 
+# this should technically be O(1) since all of the hashes will only expand to the number of 
+# elements in a 3x3 grid, which doesn't change, or would only increase by a constant.
 def valid_sudoku(table)
-  sudoku_box_hash = { [0, 0] => Set[], [0, 1] => Set[], [0, 2] => Set[],
-                      [1, 0] => Set[], [1, 1] => Set[], [1, 2] => Set[],
-                      [2, 0] => Set[], [2, 1] => Set[], [2, 2] => Set[]}
+  sudoku_box_hash = { [0, 0] => {}, [0, 1] => {}, [0, 2] => {},
+                      [1, 0] => {}, [1, 1] => {}, [1, 2] => {},
+                      [2, 0] => {}, [2, 1] => {}, [2, 2] => {}}
 
-  sudoku_row_hash = { 1 => Set[], 2 => Set[], 3 => Set[],
-                      4 => Set[], 5 => Set[], 6 => Set[],
-                      7 => Set[], 8 => Set[], 9 => Set[]}
+  sudoku_row_hash = { 1 => {}, 2 => {}, 3 => {},
+                      4 => {}, 5 => {}, 6 => {},
+                      7 => {}, 8 => {}, 9 => {}}
   
-  sudoku_col_hash = { 1 => Set[], 2 => Set[], 3 => Set[],
-                      4 => Set[], 5 => Set[], 6 => Set[],
-                      7 => Set[], 8 => Set[], 9 => Set[]}
+  sudoku_col_hash = { 1 => {}, 2 => {}, 3 => {},
+                      4 => {}, 5 => {}, 6 => {},
+                      7 => {}, 8 => {}, 9 => {}}
 
-  sudoku_diagonal_hash = {1 => Set[], 9 => Set[]}
+  sudoku_diagonal_hash = {1 => {}, 9 => {}}
 
   table.each_with_index do |arr, i|
     arr.each_with_index do |ele, j|
@@ -95,18 +100,21 @@ def valid_sudoku(table)
       # check and add diagonals
       if i == j 
         return false if sudoku_diagonal_hash[1].include?(ele)
-        sudoku_diagonal_hash[1].add(ele)
+        sudoku_diagonal_hash[1][ele] = 1
       elsif i + j + 1 == 9 || i == 4 && j == 4
         return false if sudoku_diagonal_hash[9].include?(ele)
-        sudoku_diagonal_hash[9].add(ele)
+        sudoku_diagonal_hash[9][ele] = 1
       end
 
+      # check these hashes for all elements
       return false if sudoku_row_hash[i + 1].include?(ele)
       return false if sudoku_col_hash[j + 1].include?(ele)
       return false if sudoku_box_hash[[i / 3, j / 3]].include?(ele)
-      sudoku_row_hash[i + 1].add(ele)
-      sudoku_col_hash[j + 1].add(ele)
-      sudoku_box_hash[[i / 3, j / 3]].add(ele)
+
+      # can add if no return 
+      sudoku_row_hash[i + 1][ele] = 1
+      sudoku_col_hash[j + 1][ele] = 1
+      sudoku_box_hash[[i / 3, j / 3]][ele] = 1 # based off calculating indices of ecah sudoku box
     end
   end
 
