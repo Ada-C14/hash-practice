@@ -1,12 +1,16 @@
+require 'set'
+
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
+
 # Time Complexity: O(n) where n is the total number of characters in all strings
 # >> Go through each character in every string by visiting each string in array
 # and each character in each string
 # >> O(1) for ord
 # >> O(k), where k == num strings in input array, to get all hash values
+
 # Space Complexity: O(n)
-#
+
 # Notes:
 # >> considered just assigning score using ord,
 # but this doesn't account for diff combinations of letters that sum to same score
@@ -18,7 +22,7 @@ def grouped_anagrams(strings_arr)
   anagrams_hash = {}
   strings_arr.each do |str|
     char_counts = [0] * 26
-    str.each_char { |ch| char_counts[ch.ord - 'a'.ord] += 1 }
+    str.each_char { |ch| char_counts[ch.downcase.ord - 'a'.ord] += 1 }
     if anagrams_hash[char_counts]
       anagrams_hash[char_counts] << str
     else
@@ -103,8 +107,57 @@ end
 #   Each element can either be a ".", or a digit 1-9
 #   The same digit cannot appear twice or more in the same
 #   row, column or 3x3 subgrid
+
 # Time Complexity: ?
+# >> valid_rows: O(n), where n is the total number of items in the input table
+# >> valid_cols: O(n)
+# >> valid_squares: O(n)
+
 # Space Complexity: ?
+# >> O(1) - Set max size is 9 if all elems are unique
+# >> O(1) - counters / index vars
+
 def valid_sudoku(table)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  return valid_rows?(table) && valid_cols?(table) && valid_squares?(table)
+end
+
+def valid_rows?(table)
+  table.each do |row|
+    nums = Set.new
+    row.each do |it|
+      return false if it != '.' && nums.add?(it).nil?
+    end
+  end
+
+  return true
+end
+
+def valid_cols?(table)
+  9.times do |col_ind|
+    col_nums = Set.new
+    table.each do |row|
+      return false if row[col_ind] != '.' && col_nums.add?(row[col_ind]).nil?
+    end
+  end
+
+  return true
+end
+
+def valid_squares?(table)
+  row_ind = 0
+
+  3.times do
+    3.times do |col_ind|
+      sub_square_nums = Set.new
+      3.times do |i|
+        3.times do |j|
+          cell = table[row_ind + i][col_ind * 3 + j]
+          return false if cell != '.' && sub_square_nums.add?(cell).nil?
+        end
+      end
+    end
+    row_ind += 3
+  end
+
+  return true
 end
