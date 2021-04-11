@@ -44,6 +44,7 @@ Output: [1,2]
 
 ## Example 2
 
+```
 Input: nums = [1], k = 1
 Output: [1]
 ```
