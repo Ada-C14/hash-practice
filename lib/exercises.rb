@@ -10,12 +10,19 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n)
+# Space Complexity: O(n)
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
-end
+  return [] if list.empty? 
+  tracker = {}
+  list.each do |num|
+    tracker.has_key?(num) ? tracker[num] += 1 : tracker[num] = 1
+  end
 
+  return [list[0]] if tracker.values.sum == tracker.length && k == 1
+
+  return tracker.sort_by { |key, value| value }.map { |key_val| key_val[0] }.drop(tracker.length - k)
+end
 
 # This method will return the true if the table is still
 #   a valid sudoku table.
