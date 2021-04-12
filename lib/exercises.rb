@@ -1,11 +1,16 @@
 
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(mn)
+# Space Complexity: O(mn)
 
 def grouped_anagrams(strings)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  anagrams = Hash.new([])
+  strings.each do |string|
+    sorted = string.chars.sort.join
+    anagrams[sorted] = anagrams[sorted] + [string]
+  end
+  return anagrams.values
 end
 
 # This method will return the k most common elements
@@ -29,8 +34,8 @@ end
 #   Each element can either be a ".", or a digit 1-9
 #   The same digit cannot appear twice or more in the same 
 #   row, column or 3x3 subgrid
-# Time Complexity: O(1)
-# Space Complexity: O(1)
+# Time Complexity: O(n)
+# Space Complexity: O(n)
 def valid_sudoku(table)
   rows = Array.new(9) { {} }
   columns =  Array.new(9) { {} }
