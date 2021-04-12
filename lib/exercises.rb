@@ -22,8 +22,27 @@ end
 #   Each element can either be a ".", or a digit 1-9
 #   The same digit cannot appear twice or more in the same 
 #   row, column or 3x3 subgrid
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(1)
+# Space Complexity: O(1)
 def valid_sudoku(table)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  rows = Array.new(9) { {} }
+  columns =  Array.new(9) { {} }
+  box = Array.new(9) { {} }
+
+  table.each_with_index do |row, i|
+    row.each_with_index do |column, j|
+      number = table[i][j]
+      sub_box = (i / 3) * 3 + j / 3
+      if number != '.'
+        if rows[i].has_key?(number) || columns[j].has_key?(number) || box[sub_box].has_key?(number)
+          return false
+        else
+          rows[i][number] = true
+          columns[j][number] = true
+          box[sub_box][number] = true
+        end
+      end
+    end
+  end
+  return true
 end
