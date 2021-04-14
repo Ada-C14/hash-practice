@@ -51,8 +51,56 @@ end
 #   Each element can either be a ".", or a digit 1-9
 #   The same digit cannot appear twice or more in the same 
 #   row, column or 3x3 subgrid
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n^2), for all of the cases, each of them has outer loop and inner loop for rows and columns, 
+#                          and it depends on the size of the sudoku, so it will be O(n)*O(n) --> O(n^2)
+# Space Complexity: O(n), for all of the cases, each of them takes O(n) for its hash table, so it's O(n)*3 --> O(n).
+# case1: check rows
+# case2: check columns
+# case3: check 3*3
 def valid_sudoku(table)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  # case1
+  9.times do |row|
+    hash = {}
+    table[row].each do |num|
+      if hash[num]
+        return false
+      elsif num != "."
+        hash[num] = true
+      end
+    end
+  end
+
+  # case2
+  9.times do |column|
+    hash = {}
+    table.each do |row|
+      if hash[row[column]]
+        return false
+      elsif row[column] != "."
+        hash[row[column]] = true
+      end
+    end
+  end
+
+  # case3
+  [0,3,6].each do |row|
+    [0,3,6].each do |column|
+      return false unless sudoku_helper(row, column, table)
+    end
+  end
+  return true
+end
+
+def sudoku_helper(row, column, table)
+  hash = {}
+  (row...row+3).each do |row|
+    (column...column+3).each do |column|
+      if hash[table[row][column]]
+        return false
+      elsif table[row][column] != "."
+        hash[table[row][column]] = true
+      end
+    end
+  end
+  return true
 end
