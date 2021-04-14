@@ -108,12 +108,12 @@ end
 #   The same digit cannot appear twice or more in the same
 #   row, column or 3x3 subgrid
 
-# Time Complexity: ?
+# Time Complexity: O(n)
 # >> valid_rows: O(n), where n is the total number of items in the input table
 # >> valid_cols: O(n)
 # >> valid_squares: O(n)
 
-# Space Complexity: ?
+# Space Complexity: O(1)
 # >> O(1) - Set max size is 9 if all elems are unique
 # >> O(1) - counters / index vars
 
