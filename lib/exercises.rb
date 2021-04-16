@@ -16,11 +16,7 @@ def top_k_frequent_elements(list, k)
   return [] if list.empty?
 
   hash = Hash.new(0)
-
-  list.each do |num|
-    hash[num] += 1
-  end
-
+  list.each {|num| hash[num] += 1 }
   sorted_hash = hash.sort_by {|k, v| -v}
 
   arr = []
