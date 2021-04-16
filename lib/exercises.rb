@@ -1,11 +1,27 @@
 
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n * s * log(s)) , where s = string length
+# Space Complexity: O(n)
+
+
 
 def grouped_anagrams(strings)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  return nil if strings == nil
+  
+  grouped = {}
+
+  strings.each do |word|
+    sorted = word.chars.sort.join
+    if grouped[sorted] == nil
+      grouped[sorted] = [word]
+    else
+      grouped[sorted] << word
+    end
+  end
+
+  return grouped.values
+
 end
 
 # This method will return the k most common elements
@@ -13,7 +29,34 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  nums_count = {}
+  k_frequent = []
+  return [] if list.nil? || list.empty? || !list.is_a?(Array)
+
+  list.each do |num|
+    if nums_count.has_key?(num)
+      nums_count[num] += 1
+    else
+      nums_count[num] = 1
+    end
+  end
+
+  sorted_values = nums_count.sort_by{|num, value| value}
+
+  k.times do
+    freq = nil
+    nums_count.each do |element, value|
+      if value && (freq.nil? || value > freq)
+        freq = element
+      end
+    end
+    if freq
+      nums_count[freq] = nil
+      k_frequent << freq
+    end
+  end
+
+  return k_frequent
 end
 
 
