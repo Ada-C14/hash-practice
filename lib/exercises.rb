@@ -27,7 +27,6 @@ def top_k_frequent_elements(list, k)
   end
 
   arr
-
 end
 
 
