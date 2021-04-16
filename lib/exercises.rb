@@ -29,8 +29,9 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def top_k_frequent_elements(list, k)
-  return nil if list == nil
   nums_count = {}
+  k_frequent = []
+  return [] if list.nil? || list.empty? || !list.is_a?(Array)
 
   list.each do |num|
     if nums_count.has_key?(num)
@@ -42,8 +43,20 @@ def top_k_frequent_elements(list, k)
 
   sorted_values = nums_count.sort_by{|num, value| value}
 
-  p sorted_values
-  
+  k.times do
+    freq = nil
+    nums_count.each do |element, value|
+      if value && (freq.nil? || value > freq)
+        freq = element
+      end
+    end
+    if freq
+      nums_count[freq] = nil
+      k_frequent << freq
+    end
+  end
+
+  return k_frequent
 end
 
 
