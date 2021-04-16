@@ -13,7 +13,25 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  return [] if list.empty?
+
+  hash = Hash.new(0)
+
+  list.each do |num|
+    hash[num] += 1
+  end
+
+  sorted_hash = hash.sort_by {|k, v| -v}
+
+  arr = []
+  k = k - 1
+  while k >= 0 
+    arr.unshift(sorted_hash[k][0])
+    k -=1
+  end
+
+  arr
+
 end
 
 
