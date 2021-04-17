@@ -17,9 +17,7 @@ def grouped_anagrams(strings)
       hash[char_arr] = [word]
     end
   end
-
   return hash.values
-
 end
 
 # This method will return the k most common elements
@@ -50,7 +48,6 @@ def top_k_frequent_elements(list, k)
       result << max_freq
       hash.delete(max_freq)
     end
-
   end
   return result  
 end
