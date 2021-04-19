@@ -4,8 +4,31 @@
 # Time Complexity: ?
 # Space Complexity: ?
 
+# [eat, meet, tea, ate, hi]
+
+# {
+#   'aet' => [eat, tea, ate],
+#   'eemt' => [meet],
+#   'ih' => [ih]
+# }
+
 def grouped_anagrams(strings)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  return [] if strings.length == 0
+  hash = {}
+  strings.each do |string|
+    key = anagrams_helper(string)
+    if !hash[key]
+      hash[key] = [string]
+    else 
+      hash[key] << string
+    end
+  end
+  return hash.values
+end
+
+def anagrams_helper(string)
+  array_of_letters = string.split(//)
+  return array_of_letters.sort!.join()
 end
 
 # This method will return the k most common elements
