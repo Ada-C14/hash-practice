@@ -24,14 +24,18 @@ end
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
 # Time Complexity: ?
-# Space Complexity: ?
+# Space Complexity: O(n)
 def top_k_frequent_elements(list, k)
-  hash = Hash.new(0)
-  list.each do |int|
-    hash[int] += 1
-  end
+  return list if list.empty? || list.length == 1
 
-  
+  hash = Hash.new(0)
+  list.each { |int| hash[int] += 1 }
+
+  nested_array = hash.sort_by { |k, v| -v }
+
+  k_most_frequent = []
+  k.times { |i| k_most_frequent << nested_array[i][0] }
+  return k_most_frequent
 end
 
 
