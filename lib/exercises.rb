@@ -45,9 +45,9 @@ def top_k_frequent_elements(list, k)
 
   k_dup = k.dup
   k_most_frequent = []
-  max_count.downto(1) do |key|
-    if inverted_hash[key]
-      inverted_hash[key].each do |int| 
+  max_count.downto(1) do |count|
+    if inverted_hash[count]
+      inverted_hash[count].each do |int| 
         k_most_frequent << int if k_dup > 0
         k_dup -= 1
       end
