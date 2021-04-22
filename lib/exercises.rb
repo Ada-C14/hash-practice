@@ -48,8 +48,12 @@ def top_k_frequent_elements(list, k)
   max_count.downto(1) do |count|
     if inverted_hash[count]
       inverted_hash[count].each do |int| 
-        k_most_frequent << int if k_dup > 0
-        k_dup -= 1
+        if k_dup > 0
+          k_most_frequent << int 
+          k_dup -= 1
+        else
+          return k_most_frequent
+        end
       end
     end
   end
