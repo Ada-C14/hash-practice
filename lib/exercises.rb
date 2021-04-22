@@ -23,7 +23,7 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: O(n log n)
+# Time Complexity: O(n)
 # Space Complexity: O(n)
 def top_k_frequent_elements(list, k)
   return list if list.empty? || list.length == 1
@@ -31,10 +31,29 @@ def top_k_frequent_elements(list, k)
   hash = Hash.new(0)
   list.each { |int| hash[int] += 1 }
 
-  nested_array = hash.sort_by { |k, v| -v }
+  max_count = 0
+  inverted_hash = Hash.new
+  hash.each do |key, value|
+    if inverted_hash[value]
+      inverted_hash[value] << key
+    else
+      inverted_hash[value] = [key]
+    end
 
+    max_count = value if value > max_count 
+  end
+
+  k_dup = k.dup
   k_most_frequent = []
-  k.times { |i| k_most_frequent << nested_array[i][0] }
+  max_count.downto(1) do |key|
+    if inverted_hash[key]
+      inverted_hash[key].each do |int| 
+        k_most_frequent << int if k_dup > 0
+        k_dup -= 1
+      end
+    end
+  end
+
   return k_most_frequent
 end
 
