@@ -47,7 +47,7 @@ end
 # Time Complexity: O(1) because the table has nine rows and columns
 # Space Complexity: O(1) because each hash will store up to nine cells
 def valid_sudoku(table)
-  return valid_rows(table) && valid_columns(table) && valid_subboxes(table)
+  return valid_rows(table) && valid_columns(table) && valid_boxes(table)
 end
 
 def valid_cell(char)
@@ -88,19 +88,19 @@ def valid_columns(table)
   return true
 end
 
-def valid_subboxes(table)
-  hash_subbox = Hash.new
+def valid_boxes(table)
+  hash_box = Hash.new
   3.times do |row_corner|
     3.times do |col_corner|
       3.times do |row|
         3.times do |col|
-          subbox_row = row + 3 * row_corner
-          subbox_col = col + 3 * col_corner
-          return false if hash_subbox[table[subbox_row][subbox_col]] && valid_cell(table[subbox_row][subbox_col])
-          hash_subbox[table[subbox_row][subbox_col]] = true
+          box_row = row + 3 * row_corner
+          box_col = col + 3 * col_corner
+          return false if hash_box[table[box_row][box_col]] && valid_cell(table[box_row][box_col])
+          hash_box[table[box_row][box_col]] = true
         end
       end
-      hash_subbox.clear
+      hash_box.clear
     end
   end
 
