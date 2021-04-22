@@ -151,7 +151,7 @@ describe "exercises" do
     end
   end
 
-  xdescribe "valid sudoku" do
+  describe "valid sudoku" do
     it "works for the table given in the README" do
       # Arrange
       table = [

@@ -23,7 +23,7 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: ?
+# Time Complexity: O(n log n)
 # Space Complexity: O(n)
 def top_k_frequent_elements(list, k)
   return list if list.empty? || list.length == 1
@@ -44,8 +44,65 @@ end
 #   Each element can either be a ".", or a digit 1-9
 #   The same digit cannot appear twice or more in the same 
 #   row, column or 3x3 subgrid
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(1) because the table has nine rows and columns
+# Space Complexity: O(1) because each hash will store up to nine cells
 def valid_sudoku(table)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  return valid_rows(table) && valid_columns(table) && valid_subboxes(table)
+end
+
+def valid_cell(char)
+  return char != "." && /[1-9]/.match(char)
+end
+
+def valid_rows(table)
+  hash_row = Hash.new
+  table.each do |row|
+    # Each row is an array
+    row.each do |cell|
+      return false if hash_row[cell] && valid_cell(cell)
+      hash_row[cell] = true
+    end
+    hash_row.clear
+  end
+
+  return true
+end
+
+def valid_columns(table)
+  hash_column = Hash.new
+  i = 0
+  j = 0
+  while j < table[i].length
+    # Checks column
+    while i < table.length
+      return false if hash_column[table[i][j]] && valid_cell(table[i][j])
+      hash_column[table[i][j]] = true
+      i += 1
+    end
+    hash_column.clear
+    # Reset row number back to zero
+    i = 0
+    j += 1
+  end
+
+  return true
+end
+
+def valid_subboxes(table)
+  hash_subbox = Hash.new
+  3.times do |row_corner|
+    3.times do |col_corner|
+      3.times do |row|
+        3.times do |col|
+          subbox_row = row + 3 * row_corner
+          subbox_col = col + 3 * col_corner
+          return false if hash_subbox[table[subbox_row][subbox_col]] && valid_cell(table[subbox_row][subbox_col])
+          hash_subbox[table[subbox_row][subbox_col]] = true
+        end
+      end
+      hash_subbox.clear
+    end
+  end
+
+  return true
 end
