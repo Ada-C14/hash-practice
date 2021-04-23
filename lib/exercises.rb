@@ -74,5 +74,70 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def valid_sudoku(table)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  rows_and_columns_valid = true
+  i = 0
+  while rows_and_columns_valid && i < 9
+    rows_and_columns_valid = check_row(table, i) && check_column(table, i)
+    i += 1
+  end
+  subgrid_valid = check_subgrid(table)
+
+  return rows_and_columns_valid && subgrid_valid
+end
+
+def check_row(table, row_index)
+  row_hash = {}
+  9.times do |i|
+    value = table[row_index][i]
+    if row_hash[value] && value != "."
+      return false
+    else
+      row_hash[value] = true
+    end
+  end
+  return true
+end
+
+def check_column(table, column_index)
+  column_hash = {}
+  9.times do |i|
+    value = table[i][column_index]
+    if column_hash[value] && value != "."
+      return false
+    else
+      column_hash[value] = true
+    end
+  end
+  return true
+end
+
+def check_subgrid(table)
+  subgrid_values = collect_all_subgrid_values(table)
+  subgrid_values.each do |subgrid|
+    subgrid_hash = {}
+    subgrid.each do |value|
+      if subgrid_hash[value] && value != "."
+        return false
+      else
+        subgrid_hash[value] = true
+      end
+    end
+  end
+  return true
+end
+
+def collect_all_subgrid_values(table)
+  subgrid_values = []
+  3.times do |row_index|
+    row_index *= 3
+    3.times do |column_index|
+      column_index *= 3
+      # puts "coord [#{row_index}, #{column_index}]"
+      subgrid_values <<  [table[row_index][column_index], table[row_index][column_index+1], table[row_index][column_index+2],
+                          table[row_index+1][column_index], table[row_index+1][column_index+1], table[row_index+1][column_index+2],
+                          table[row_index+2][column_index], table[row_index+2][column_index+1], table[row_index+2][column_index+2]]
+      # p subgrid_values[-1]
+    end
+  end
+  return subgrid_values
 end
