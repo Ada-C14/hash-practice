@@ -1,20 +1,22 @@
 
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
-# Time Complexity: ?
-# Space Complexity: ?
-
+# Time Complexity: O(n) where n is the number of chars
+# Space Complexity: O(n) where n is the number of words
 def grouped_anagrams(strings)
-  output = Hash.new
+  frequency_hash_to_words = Hash.new
 
-  string_letter_count =  strings.map do |word|     
-    letter_count = word.each_char.with_object(Hash.new(0)) { |letter, count| count[letter] += 1 }
+  strings.each do |word|
+    frequency_hash = word.each_char.with_object(Hash.new(0)) { |letter, count| count[letter] += 1 }
+
+    if frequency_hash_to_words.include?(frequency_hash)
+      frequency_hash_to_words[frequency_hash] << word
+    else
+      frequency_hash_to_words[frequency_hash] = [ word ]
+    end
   end
 
-  p string_letter_count[0] == string_letter_count[1]
-
-  # string_letter_count.group_by.with_index { |a, index| output[a] }.values
-  # p Hash[string_letter_count.zip(strings)].group_by.with_index { |key, i| p key }
+  return frequency_hash_to_words.values
 end
 
 # This method will return the k most common elements
