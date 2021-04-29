@@ -1,11 +1,20 @@
 
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(nm(log m)) + O(n) (sort_by for each string + length of strings array)
+# Space Complexity: O(n) (hash size increases with input array length, no other data structures made)
 
 def grouped_anagrams(strings)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  anagrams = {}
+  strings.each do |string|
+    abc_string = string.chars.sort_by(&:downcase).join
+    if !anagrams[abc_string]
+      anagrams[abc_string] = []
+    end
+    anagrams[abc_string] << string
+  end 
+  puts anagrams
+  return anagrams.values
 end
 
 # This method will return the k most common elements
