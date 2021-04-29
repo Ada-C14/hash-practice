@@ -19,10 +19,25 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n) + O(n logn) ( sort is nlogn, list.each is n, map is n)
+# Space Complexity: O(n) (multiple same sized arrays)
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  # raise NotImplementedError, "Method hasn't been implemented yet!"
+  return list if list.empty?
+  
+  counted = {}
+  list.each do |num|
+    if counted[num] 
+      counted[num] += 1
+    else 
+      counted[num] = 1
+    end
+  end
+
+  sorted = counted.sort {|a,b| b[1]<=>a[1]}
+  keys = sorted.map { |n| n[0] }
+
+  return keys.slice(0, k)
 end
 
 
