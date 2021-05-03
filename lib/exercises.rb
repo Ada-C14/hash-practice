@@ -1,8 +1,8 @@
 
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n * m log m) where n - length of the strings array, m - length of the longest string
+# Space Complexity: O(n)
 
 # [eat, meet, tea, ate, hi]
 
@@ -33,8 +33,8 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n log n)
+# Space Complexity: O(n)
 def top_k_frequent_elements(list, k)
   return [] if list.length == 0
   hash = {}
@@ -54,10 +54,6 @@ def top_k_frequent_elements(list, k)
     result << sorted_hash[i][0]
     i += 1
   end
-
-  # max_pairs = hash.each.max_by(k) { |pair| pair[1] }
-  # return max_pairs.map {|pair| pair[0]}
-
   return result
 end
 
@@ -70,5 +66,6 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def valid_sudoku(table)
+  
   raise NotImplementedError, "Method hasn't been implemented yet!"
 end
