@@ -14,7 +14,7 @@ def grouped_anagrams(strings)
     if hash[anagram_key]
       hash[anagram_key] << str
     else
-      hash[a_key] = [str]
+      hash[anagram_key] = [str]
     end
   end 
 
