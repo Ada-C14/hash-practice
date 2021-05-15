@@ -5,7 +5,18 @@
 # Space Complexity: ?
 
 def grouped_anagrams(strings)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  hash = {}
+  return [] if strings.nil? || strings.empty?
+
+  strings.each do |string|
+    key = string.chars.sort.join
+    if hash.include?(key)
+      hash[key] << string
+    else
+      hash[key] = [string]
+    end 
+  end 
+  return hash.values
 end
 
 # This method will return the k most common elements
