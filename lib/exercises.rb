@@ -26,12 +26,31 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: ?
-# Space Complexity: ?
+# Time Complexity: O(n^2) because of the .sort_by used mid method
+# Space Complexity: O(n)
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
-end
+  return [] if list.nil? || list == []
+  
+  frequency_hash = Hash.new
 
+  list.each do |integer|
+    if frequency_hash[integer]
+      frequency_hash[integer] += 1
+    else
+      frequency_hash[integer] = 1
+    end
+  end
+
+  descending_freq_array = frequency_hash.sort_by {|k,v| -v}
+
+  i = 0
+  output_array = []
+  until i == k do
+    output_array << descending_freq_array[i][0]
+    i += 1
+  end
+  return output_array
+end
 
 # This method will return the true if the table is still
 #   a valid sudoku table.
