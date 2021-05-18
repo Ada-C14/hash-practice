@@ -26,7 +26,7 @@ end
 def top_k_frequent_elements(list, k)
   count_hash = {}
   answer = []
-  return answer if list.nil? || list.empty?
+  return answer if list.nil? || list.empty? || !list.is_a?(Array)
 
   list.each do |element|
     if count_hash?(element)
