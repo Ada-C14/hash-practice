@@ -24,30 +24,24 @@ end
 # Time Complexity: o(n)
 # Space Complexity: o(n)
 def top_k_frequent_elements(list, k)
-  count_hash = {}
-  answer = []
-  return answer if list.nil? || list.empty? || !list.is_a?(Array)
+  return [] if list.length == 0
+  
+  hash = {}
 
   list.each do |element|
-    if count_hash?(element)
-      count_hash[element] += 1
+    if hash[element]
+      hash[element] += 1
     else
-      count_hash[element] = 1
+      hash[element] = 1
     end
-  end 
-  k.times do
-    top = nil
-    count_hash.each do |element,value|  
-      if value && (top.nil? || value > top)
-        top = element
-      end
-    end 
-    if top 
-      count_hash[top] = nil
-      answer << top
-    end
-  end 
-  return answer
+  end
+
+  sorted = hash.sort_by {|key, value| -value }
+  result = []
+  k.times do |index|
+    result << sorted[index].first
+  end
+    return result
 
 end
 
@@ -55,7 +49,7 @@ end
 # This method will return the true if the table is still
 #   a valid sudoku table.
 #   Each element can either be a ".", or a digit 1-9
-#   The same digit cannot appear twice or more in the same 
+#   The same digit cannot appear twice or moregit in the same 
 #   row, column or 3x3 subgrid
 # Time Complexity: ?
 # Space Complexity: ?
