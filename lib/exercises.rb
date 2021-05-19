@@ -1,7 +1,7 @@
 
 # This method will return an array of arrays.
 # Each subarray will have strings which are anagrams of each other
-# Time Complexity: O(n)
+# Time Complexity: O(nm) where n is array length(words) and m is word length(letters)
 # Space Complexity: O(n)
 
 def grouped_anagrams(strings)
@@ -15,7 +15,7 @@ def grouped_anagrams(strings)
   strings.each do |word|
     letters = word.split("").sort
 
-    if hash[letters]
+    if hash[letters] # if it has the sorted letters
       hash[letters] << word
     else
       hash[letters] = [word]
