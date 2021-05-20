@@ -9,7 +9,7 @@ def grouped_anagrams(strings)
 
   anagrams = Hash.new([])
   strings.each do |element|
-    sorted_letters = element.split('').sort
+    sorted_letters = element.sort
     if anagrams[sorted_letters]
       anagrams << element
     else
