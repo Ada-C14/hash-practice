@@ -11,9 +11,10 @@ def grouped_anagrams(strings)
   strings.each do |element|
     sorted_letters = element.split('').sort
     if anagrams[sorted_letters]
-      anagrams << element
+      anagrams[sorted_letters] << element
     else
       anagrams[sorted_letters] = element
+    end
   end
   return anagrams.values
   # strings.each.with_index { |el, i| anagrams[el.downcase.chars.sort.join] += [i] }
