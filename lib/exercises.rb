@@ -4,6 +4,9 @@
 # Time Complexity: O(n^2)
 # Space Complexity: O(n)
 
+# sort the letters in the string alphabetically
+# and use that sorted string as the key => O(n log n)
+# or use a hash containing letter counts as the key
 def grouped_anagrams(strings)
   hash = Hash.new
   strings.each do |string|
