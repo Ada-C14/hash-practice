@@ -5,7 +5,22 @@
 # Space Complexity: ?
 
 def grouped_anagrams(strings)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  if strings.length == 0
+    return []
+  end
+  anagrams = {}
+  
+  strings.each do |string|
+    sorted = string.chars.sort
+    if anagrams[sorted]
+      anagrams[sorted] << string
+    else
+      anagrams[sorted] = [string]
+    end
+  end
+  
+  return anagrams.values
+
 end
 
 # This method will return the k most common elements
@@ -13,7 +28,26 @@ end
 # Time Complexity: ?
 # Space Complexity: ?
 def top_k_frequent_elements(list, k)
-  raise NotImplementedError, "Method hasn't been implemented yet!"
+  if list.length == 0
+    return []
+  end
+
+  counter_hash = {}
+    list.each do |num|
+      if counter_hash[num]
+          counter_hash[num] += 1
+      else
+          counter_hash[num] = 1
+      end
+    end
+  result = []
+  counter_hash = counter_hash.sort_by{|k,v| v }.reverse
+  index = 0
+  k.times do
+    result << counter_hash[index][0]
+    index += 1
+  end
+    return result   
 end
 
 
