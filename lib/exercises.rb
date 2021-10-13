@@ -8,8 +8,6 @@ def grouped_anagrams(strings)
   return [] if strings.nil?
   return [] if strings.empty?
 
-  results = []
-
   hash = {}
 
   strings.each do |word|
@@ -29,7 +27,7 @@ end
 
 # This method will return the k most common elements
 # in the case of a tie it will select the first occuring element.
-# Time Complexity: O (n)
+# Time Complexity: O (n log n) for using sort
 # Space Complexity: O (n)
 def top_k_frequent_elements(list, k)
   return [] if list.nil?
