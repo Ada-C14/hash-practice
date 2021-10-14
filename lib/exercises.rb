@@ -22,7 +22,6 @@ def grouped_anagrams(strings)
   end
 
   return hash.values
-
 end
 
 # This method will return the k most common elements
@@ -30,23 +29,22 @@ end
 # Time Complexity: O (n log n) for using sort
 # Space Complexity: O (n)
 def top_k_frequent_elements(list, k)
-  return [] if list.nil?
-  return [] if list.empty?
 
-  hash = Hash.new(0)
+  return [] if list.nil? || list.empty?
 
-  list.each do |num|
-    hash[num] += 1
+  if k.nil?
+    raise ArgumentError,"k was not provided"
   end
 
-  hash_sorted= hash.sort_by{|k,v| -v}
+  frequent = Hash.new(0)
 
-  results =  hash_sorted[0..k-1].map{|k,v| k}
+  list.each do |num|
+    frequent[num] += 1
+  end
 
-  return results
-
+  results = frequent.sort_by{|num , frequency| -frequency }
+  results[0...k].map{|num , frequency| num }
 end
-
 
 # This method will return the true if the table is still
 #   a valid sudoku table.
